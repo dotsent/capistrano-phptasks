@@ -1,3 +1,4 @@
+require 'capistrano/phptasks/base'
 require 'capistrano/phptasks/common'
 
 configuration = Capistrano::Configuration.respond_to?(:instance) ?
@@ -12,6 +13,7 @@ configuration.load do
 
         before "deploy:install_pkgs", "deploy:install_pyrus"
         after "deploy:install_pyrus", "deploy:discover_channels"
+        after "deploy:finalize_update", "deploy:pyrus_symlinks"
 
         desc "Install pyrus pear2"
         task :install_pyrus do

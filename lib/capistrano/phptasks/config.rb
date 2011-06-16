@@ -20,7 +20,7 @@ configuration.load do
                 abort "config_scp_source not set!"
             end
 
-        	run "scp #{options} #{config_scp_source} #{latest_release}/applicaton/configs/"	 
+        	run "scp #{options} #{config_scp_source} #{latest_release}/application/configs/"
         end
     end
 end
