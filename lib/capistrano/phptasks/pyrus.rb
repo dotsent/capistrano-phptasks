@@ -68,7 +68,7 @@ configuration.load do
 
                 pyrus_package_symlinks.each do |pkg|
                     pkgs = pkgs + " #{latest_release}/library/#{pkg}"
-                    links = links + "#{shared_lib_root}/#{pkg}"
+                    links = links + " #{shared_lib_root}/#{pkg}"
                 end
 
                 links = links + " #{latest_release}/library"
