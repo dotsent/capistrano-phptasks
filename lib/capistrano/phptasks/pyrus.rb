@@ -22,6 +22,7 @@ configuration.load do
             else
                 run "wget http://pear2.php.net/pyrus.phar -q -O #{pyrus_bin}"
                 run "chmod +x #{pyrus_bin}"
+                run "#{pyrus_bin} #{pyrus_dir} set bin_dir #{shared_path}/bin/"
             end
         end
     
