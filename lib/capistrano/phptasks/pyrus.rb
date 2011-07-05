@@ -12,7 +12,7 @@ configuration.load do
     namespace :deploy do
 
         before "deploy:install_pkgs", "deploy:install_pyrus"
-        after "deploy:install_pyrus", "deploy:discover_channels"
+        before "deploy:install_pkgs", "deploy:discover_channels"
         after "deploy:finalize_update", "deploy:pyrus_symlinks"
 
         desc "Install pyrus pear2"
@@ -27,8 +27,19 @@ configuration.load do
         end
     
         #desc "Discover pyrus channels"
-        task :discover_channels do
-            run "#{pyrus_bin} #{pyrus_dir} set auto_discover 1"
+        task :discover_channels do                    
+            if (exists?(:pyrus_packages))
+                channels = []
+              
+                pyrus_packages.each do |pkg|
+                    channel = pkg.split('/')[0]
+                    channels.push(channel) unless channels.include?(channel)
+                end
+                
+                channels.each do |ch|
+                    run "#{pyrus_bin} #{pyrus_dir} channel-discover #{ch}"
+                end
+            end
         end
     
         desc "Install pyrus packages"

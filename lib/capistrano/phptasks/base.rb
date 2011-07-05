@@ -7,6 +7,8 @@ configuration = Capistrano::Configuration.respond_to?(:instance) ?
 configuration.load do
 
     namespace :deploy do
+        after "deploy:finalize_update", "deploy:write_version"
+      
         task :start, :roles => :app do
     
         end
@@ -35,6 +37,11 @@ configuration.load do
             #  asset_paths = %w(images css js).map { |p| "#{latest_release}/public/#{p}" }.join(" ")
             #  run "find #{asset_paths} -exec touch -t #{stamp} {} ';'; true", :env => { "TZ" => "UTC" }
             #end
+        end
+        
+        # Write :branch variable contents into VERSION file to identify deployed revision
+        task :write_version do
+            run "echo '#{branch}' > #{latest_release}/VERSION"
         end
     end
 end
