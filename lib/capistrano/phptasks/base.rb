@@ -41,7 +41,11 @@ configuration.load do
         
         # Write :branch variable contents into VERSION file to identify deployed revision
         task :write_version do
-            run "echo '#{branch}' > #{latest_release}/VERSION"
+            if (exists?(:deploy_version))
+                run "echo '#{deploy_version}' > #{latest_release}/VERSION"
+            else
+                run "cp #{latest_release}/REVISION #{latest_release}/VERSION"
+            end
         end
     end
 end
