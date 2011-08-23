@@ -8,7 +8,7 @@ configuration.load do
 
     namespace :deploy do
 
-        after "deploy:symlink", "deploy:update_config"
+        before "deploy:symlink", "deploy:update_config"
 
         #desc "Update configuration files, keys, etc"
         task :update_config do
