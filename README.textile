@@ -1,1 +1,9 @@
 h1. capistrano-mycorp
+
+h2. Install Jeweler 
+
+<pre>sudo gem install jeweler</pre>
+
+h2. Build gem file
+
+<pre>rake build</pre>
