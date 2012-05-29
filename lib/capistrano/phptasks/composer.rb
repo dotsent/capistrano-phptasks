@@ -10,7 +10,7 @@ configuration.load do
   set(:composer_bin) { "#{shared_path}/composer.phar" }
 
   # Dirs that need to remain the same between deploys (shared dirs)
-  _cset(:shared_children,     ["library", "vendor"])
+  _cset(:shared_children, ["vendor"])
 
   # Files that need to remain the same between deploys
   set :shared_files,        false
