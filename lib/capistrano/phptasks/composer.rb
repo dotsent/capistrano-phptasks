@@ -30,14 +30,12 @@ configuration.load do
     task :install do
     logger.info "Installing package"
       run "cd #{latest_release} && #{php_bin} -dallow_url_fopen=true #{composer_bin} --no-ansi install"
-#&> /dev/null"
     end
     
-    desc "Update pyrus packages"
+    desc "Update packages via composer"
       task :update do
         logger.info "Updating package"
       run "cd #{latest_release} && #{php_bin} -dallow_url_fopen=true #{composer_bin} --no-ansi update"
-#&> /dev/null"
     end
     
     desc "Selfupdate composer.phar"
