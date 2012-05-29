@@ -46,12 +46,13 @@ configuration.load do
       run "#{php_bin} -dallow_url_fopen=true #{composer_bin} self-update &> /dev/null"
     end
 
+    # deprecated and may be removed in a future releases
     task :share_childs do
       if shared_children
         shared_children.each do |link|
           run "mkdir -p #{shared_path}/#{link}"
           run "if [ -d #{release_path}/#{link} ] ; then rm -rf #{release_path}/#{link}; fi"
-          run "ln -nfs #{shared_path}/#{link} #{release_path}/#{link}"
+          run "ln -nfs #{shared_path}/#{link} #{current_release}/#{link}"
         end
       end
       if shared_files
@@ -59,7 +60,7 @@ configuration.load do
           link_dir = File.dirname("#{shared_path}/#{link}")
           run "mkdir -p #{link_dir}"
           run "touch #{shared_path}/#{link}"
-          run "ln -nfs #{shared_path}/#{link} #{release_path}/#{link}"
+          run "ln -nfs #{shared_path}/#{link} #{current_release}/#{link}"
         end
       end
     end
