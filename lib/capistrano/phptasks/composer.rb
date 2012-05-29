@@ -16,9 +16,6 @@ configuration.load do
   set :shared_files,        false
 
   namespace :composer do
-
-    after "deploy:finalize_update", "composer:composer_symlinks"
-
     desc "Download composer.phar"
     task :download do
       if remote_file_exists?("#{composer_bin}")
@@ -47,15 +44,6 @@ configuration.load do
     task :selfupdate do
       logger.info "Selfupdating composer.phar"
       run "#{php_bin} -dallow_url_fopen=true #{composer_bin} self-update &> /dev/null"
-    end
-
-    #desc "Create package symlinks in library/ directory"
-    task :composer_symlinks do
-      run "if [ -d #{release_path}/library ] ; then rm -rf #{release_path}/library; fi"
-      run "ln -s #{shared_path}/library #{latest_release}/library"
-  
-      run "if [ -d #{release_path}/vendor ] ; then rm -rf #{release_path}/vendor; fi"
-      run "ln -s #{shared_path}/vendor #{latest_release}/vendor"
     end
 
     task :share_childs do
