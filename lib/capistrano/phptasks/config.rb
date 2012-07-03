@@ -5,9 +5,9 @@ configuration = Capistrano::Configuration.respond_to?(:instance) ?
   Capistrano.configuration(:must_exist)
 
 configuration.load do
+    set(:config_scp_destination) { "#{latest_release}/application/configs/" }
 
     namespace :deploy do
-
         before "deploy:create_symlink", "deploy:update_config"
 
         #desc "Update configuration files, keys, etc"
@@ -20,7 +20,7 @@ configuration.load do
                 abort "config_scp_source not set!"
             end
 
-        	run "scp #{options} #{config_scp_source} #{latest_release}/application/configs/"
+            run "scp #{options} #{config_scp_source} #{config_scp_destination}"
         end
     end
 end
